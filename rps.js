@@ -1,3 +1,5 @@
+
+
 function getRandInt( max){
     return Math.floor(Math.random()*max);
 }
@@ -9,58 +11,75 @@ function getCompChoice(){
     else return "scissor";
 }
 
-function getHumanChoice(){
-    let choice = prompt("Enter your choice:");
-    return choice.toLowerCase();
+function getHumanChoice(event){
+    let humanChoice = ''
+    switch(event.target.id){
+        case 'rock':
+            humanChoice = 'rock'
+        case 'paper':
+            humanChoice = 'paper'
+        case 'scissor':
+            humanChoice = 'scissor'
+            
+    }
+    return humanChoice
 }
 let humanScore = 0;
 let compScore = 0;
 
-function playRound(humanChoice,CompChoice){
-    if(humanChoice == CompChoice) console.log("It's a draw!");
-    else if(humanChoice == "rock" && CompChoice == "paper") {console.log("You lose! Paper beats Rock");
+function playRound(humanChoice,CompChoice,result){
+    if(humanChoice == CompChoice) result.textContent="It's a draw!";
+    else if(humanChoice == "rock" && CompChoice == "paper") {result.textContent = "You lose! Paper beats Rock";
         compScore++;
+
     }
-    else if(humanChoice == "rock" && CompChoice == "scissor") {console.log("You win! rock beats Scissors");
+    else if(humanChoice == "rock" && CompChoice == "scissor") {result.textContent="You win! rock beats Scissors";
         humanScore++;
     }
-    else if(humanChoice == "paper" && CompChoice == "rock"){ console.log("You win! Paper beats Rock");
+    else if(humanChoice == "paper" && CompChoice == "rock"){ result.textContent = "You win! Paper beats Rock";
         humanScore++;
     }
-    else if(humanChoice == "paper" && CompChoice == "scissor") {console.log("You lose! Scissors beats paper");
+    else if(humanChoice == "paper" && CompChoice == "scissor") {result.textContent = "You lose! Scissors beats paper";
         compScore++;
 }
-    else if(humanChoice == "scissor" && CompChoice == "paper") {console.log("You win! Scissors beats Paper");
+    else if(humanChoice == "scissor" && CompChoice == "paper") {result.textContent = "You win! Scissors beats Paper";
             humanScore++;
     }
-    else if(humanChoice == "scissor" && CompChoice == "rock"){ console.log("You lose! Rock beats Scissors");
+    else if(humanChoice == "scissor" && CompChoice == "rock"){ result.textContent = "You lose! Rock beats Scissors";
         compScore++;
     }
     
 
 }
 
-function playGame(){
-    let rounds = 5;
-    while(rounds > 0){
-        let human = getHumanChoice();
-        let comp = getCompChoice();
-        playRound(human,comp);
-        rounds--;
-    }
 
-    if(humanScore > compScore){
-        console.log("You win\nYour score: " + humanScore + "\nComp score: " + compScore);
-    }
 
-    else if(compScore > humanScore){
-        console.log("You lose\nYour score: " + humanScore + "\nComp score: " + compScore);
-    }
+const rock = document.createElement("button")
+const paper = document.createElement("button")
+const sci = document.createElement("button")
+const buttons = document.createElement("div")
+
+buttons.appendChild(rock)
+buttons.appendChild(paper)
+buttons.appendChild(sci)
+const body = document.querySelector("body")
+body.appendChild(buttons)
+rock.textContent = "Rock"
+paper.textContent = "Paper"
+sci.textContent = "Scissor"
+
+rock.setAttribute('id','rock')
+paper.setAttribute('id','paper')
+sci.setAttribute('id','scissor')
+
+
+const result = document.createElement("div")
+body.appendChild(result)
+
+const finalScore = document.createElement("div")
+body.appendChild(finalScore)
+buttons.addEventListener('click', (event)=> {
+    playGame(event,finalScore,result)
     
-    else{
-        console.log("It is a draw\nYour score: " + humanScore + "\nComp score: " + compScore);
-    }
-    
-}
+})
 
-playGame()
