@@ -11,15 +11,20 @@ function getCompChoice(){
     else return "scissor";
 }
 
-function getHumanChoice(event){
+function getHumanChoice(id){
     let humanChoice = ''
-    switch(event.target.id){
-        case 'rock':
+    switch(id){
+        case "rock":
             humanChoice = 'rock'
+            break;
         case 'paper':
             humanChoice = 'paper'
+            break;
         case 'scissor':
             humanChoice = 'scissor'
+            break;
+        
+
             
     }
     return humanChoice
@@ -81,10 +86,16 @@ body.appendChild(result)
 let rounds = 5;
 const finalScore = document.createElement("div")
 body.appendChild(finalScore)
+
+
+const finish = document.createElement("div")
+
+body.appendChild(finish)
 buttons.addEventListener('click', (event)=> {
    
     if (rounds > 0){
-        let humanChoice = getHumanChoice(event)
+        let id = event.target.id
+        let humanChoice = getHumanChoice(id)
         let CompChoice = getCompChoice();
         playRound(humanChoice,CompChoice,result)
         console.log(humanChoice)
@@ -95,9 +106,8 @@ buttons.addEventListener('click', (event)=> {
     
     finalScore.textContent = "Your Score: " + humanScore + "        Comp Score: " + compScore;
     rounds--;
-    if(rounds == 0){
-        const finish = document.createElement("div")
-
+    if(rounds <= 0){
+    console.log(rounds)
         if(humanScore > compScore)
         finish.textContent = "Rounds Over. You win"
         
@@ -109,10 +119,12 @@ buttons.addEventListener('click', (event)=> {
             finish.textContent = "Rounds Over. It is a draw"
         }
 
-        body.appendChild(finalScore)
 
     }
 
+
     
 })
+
+
 
