@@ -48,6 +48,7 @@ function playRound(humanChoice,CompChoice,result){
     else if(humanChoice == "scissor" && CompChoice == "rock"){ result.textContent = "You lose! Rock beats Scissors";
         compScore++;
     }
+
     
 
 }
@@ -76,10 +77,42 @@ sci.setAttribute('id','scissor')
 const result = document.createElement("div")
 body.appendChild(result)
 
+
+let rounds = 5;
 const finalScore = document.createElement("div")
 body.appendChild(finalScore)
 buttons.addEventListener('click', (event)=> {
-    playGame(event,finalScore,result)
+   
+    if (rounds > 0){
+        let humanChoice = getHumanChoice(event)
+        let CompChoice = getCompChoice();
+        playRound(humanChoice,CompChoice,result)
+        console.log(humanChoice)
+        console.log(CompChoice)
+
+        
+    }
+    
+    finalScore.textContent = "Your Score: " + humanScore + "        Comp Score: " + compScore;
+    rounds--;
+    if(rounds == 0){
+        const finish = document.createElement("div")
+
+        if(humanScore > compScore)
+        finish.textContent = "Rounds Over. You win"
+        
+        else if (compScore > humanScore){
+            finish.textContent = "Rounds Over. You lose"
+        }
+
+        else{
+            finish.textContent = "Rounds Over. It is a draw"
+        }
+
+        body.appendChild(finalScore)
+
+    }
+
     
 })
 
